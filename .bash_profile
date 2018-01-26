@@ -1,6 +1,4 @@
 ################################################################################
-#eval $(docker-machine env default)
-
 # Bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
@@ -33,7 +31,6 @@ export WORKON_HOME=~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Aliases
-alias api="docker exec -it api"
 alias nv="nvim"
 alias dcd="deactivate; cd;"
 alias da="deactivate"
@@ -74,11 +71,6 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-
-# AWS credentials
-#export AWS_DEFAULT_REGION=us-east-1
-#export AWS_ACCESS_KEY_ID=AKIAJA47VFQYQRF6CBOQ
-#export AWS_SECRET_ACCESS_KEY=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
 
 export NVM_DIR="/Users/Chan/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
