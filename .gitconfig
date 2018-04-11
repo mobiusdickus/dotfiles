@@ -1,0 +1,12 @@
+# This is Git's per-user configuration file.
+[user]
+name = Colin Chan
+email = colin@propellr.com
+[alias]
+	b = branch
+	s = status
+  co = checkout
+[credential]
+	helper = osxkeychain
+[merge]
+	tool = opendiff
