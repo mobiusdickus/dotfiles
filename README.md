@@ -3,10 +3,10 @@
 My personal custom configuration files.
 The goal is to make transporting my setup across platforms as smoothly and easily as possible. 
 
-## General Management
+## About
 
 I am currently managing my all of my dotfiles with [GNU stow](https://www.gnu.org/software/stow/),
-a symlink farm manager, and work locally with mac os x machine and remotely with ubuntu 16.04 machine.
+a symlink farm manager, and work locally with mac os x and remotely with an ubuntu 16.04 machine.
 
 Mac OS X
 ```bash
