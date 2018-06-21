@@ -23,7 +23,13 @@ $ sudo apt-get install stow
 ```bash
 $ git clone https://github.com/mobiusdickus/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
-$ stow bash vim git # some dir name containing config files
+$ stow bash vim git # some .dotfiles dir name containing config files
+```
+
+To symlink to directories other than your home directory use the -t flag
+
+```bash
+$ stow nvim -t ~/.config/nvim/ # example
 ```
 
 ### To Do
