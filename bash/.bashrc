@@ -68,13 +68,17 @@ _completemarks() {
 complete -F _completemarks jump unmark
 
 #################################################################################
+# ---------- Pyenv ----------
+export PYENV_ROOT=~/.pyenv
+eval "$(pyenv init -)"
+
+#################################################################################
 # ---------- Misc ----------
 source /usr/local/opt/autoenv/activate.sh   # Load autoenv
-source ~/.apikeys                           # Load project based apikeys
 export GIT_EDITOR=nvim                      # Define git text editor
 export PYTHONDONTWRITEBYTECODE=True         # Don't produce .pyc or .pyo files
-export PYENV_ROOT=/usr/local/bin/pyenv      # Define location of pyenv root executable
 export NVIM_TUI_ENABLE_TRUE_COLOR=1         # Set neovim terminal color
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 #################################################################################
 # ---------- Aliases ----------
