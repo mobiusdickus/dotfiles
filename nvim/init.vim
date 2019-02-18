@@ -31,10 +31,11 @@ Plug 'mkarmona/colorsbox'
 Plug 'mxw/vim-jsx'
 Plug 'airblade/vim-gitgutter'
 Plug 'craigemery/vim-autotag'
-Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'chr4/nginx.vim'
 Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'mileszs/ack.vim'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -69,6 +70,14 @@ nnoremap ; :tnext<CR>
 nmap <leader><Tab> :MBEbn<CR>
 nmap <leader>` :MBEbp<CR>
 nmap <Tab> :CtrlPBuffer<CR>
+
+" Silver Searcher
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
 
 " Ag search
 nmap <leader>f :Ag!
