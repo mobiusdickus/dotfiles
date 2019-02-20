@@ -32,7 +32,7 @@ To symlink to directories other than your home directory use the -t flag
 $ stow nvim -t ~/.config/nvim/ # example
 ```
 
-Separate work realted bash configs for more managable profile
+Separate work related bash configs for more managable profile
 ```bash
 $ mkdir ~/.work
 ```
