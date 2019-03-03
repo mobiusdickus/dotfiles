@@ -1,90 +1,118 @@
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'pangloss/vim-javascript'
-Plug 'walm/jshint.vim'
-Plug 'kchmck/vim-coffee-script'
-Plug 'mattn/emmet-vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'fholgado/minibufexpl.vim'
-Plug 'Shougo/deoplete.nvim'
+" Colorschemes
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'mkarmona/colorsbox'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Directory and Tag Lists
 Plug 'scrooloose/nerdtree'
-Plug 'jtratner/vim-flavored-markdown'
 Plug 'scrooloose/nerdcommenter'
-Plug 'rking/ag.vim'
-Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+" Auto Completion 
+Plug 'Shougo/deoplete.nvim'
+Plug 'SirVer/ultisnips'
+Plug 'craigemery/vim-autotag'
+Plug 'honza/vim-snippets'
+" Search
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf.vim'
+" Code Specific Formats
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'fatih/vim-go'
+Plug 'jtratner/vim-flavored-markdown'
+Plug 'chr4/nginx.vim'
+Plug 'sheerun/vim-polyglot'
+" Coding Helpers
+Plug 'w0rp/ale'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'valloric/MatchTagAlways'
+Plug 'mattn/emmet-vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'gcmt/wildfire.vim'
-Plug 'tpope/vim-surround'
 Plug 'docunext/closetag.vim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
-Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vimwiki/vimwiki'
 Plug 'PeterRincker/vim-argumentative'
-Plug 'leafgarland/typescript-vim'
-Plug 'mkarmona/colorsbox'
-Plug 'mxw/vim-jsx'
-Plug 'airblade/vim-gitgutter'
-Plug 'craigemery/vim-autotag'
-Plug 'junegunn/fzf.vim'
-Plug 'chr4/nginx.vim'
 Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'mileszs/ack.vim'
-Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
 " Change mapleader
 let mapleader=","
 
-" Theme
-colorscheme colorsbox-stbright
+" ********** NERDTree Settings **********
+" Toggle
+map <leader>n :NERDTreeToggle<CR>
 
-" Cursor line style
-color colorsbox-stbright
+" ********** Colorscheme Settings **********
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+
+" ********** Cursor Settings **********
+color gruvbox
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey20
-
-" Powerline font
-let g:airline_powerline_fonts = 1
-
 " Enable mouse events
 set mouse=a
 
-" Toggle NERDTree
-map <leader>n :NERDTreeToggle<CR>
+" ********** Status and Tab Settings **********
+let g:airline_theme = 'base16'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#exclude_preview = 1
+let g:airline#extensions#tabline#formatter = 'default'
+" Cycle through buffers
+nmap <leader><Tab> :bn<CR>
+nmap <leader>` :bp<CR>
+" Split movement bindings
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>h
+nnoremap <C-h> <C-w>k
+nnoremap <C-l> <C-w>l
 
+" ********** Autocompletion Settings **********
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+" Python host locations
+let g:python3_host_prog = '/usr/local/bin/python3'
+
+" ********** Search Settings **********
 " CtrlP mappings
 let g:ctrlp_map = '<leader>t'
 nmap <leader>r :CtrlPTag<cr>
-
-" Go-to-next-tag mapping
-nnoremap ; :tnext<CR>
-
-" Cycle through buffers
-nmap <leader><Tab> :MBEbn<CR>
-nmap <leader>` :MBEbp<CR>
-nmap <Tab> :CtrlPBuffer<CR>
-
+" Ack search
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
 " Silver Searcher
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+" Go-to-next-tag mapping
+nnoremap ; :tnext<CR>
+" Easymotion binding and config
+nmap <space> <Plug>(easymotion-s2)
+let g:EasyMotion_smartcase = 1
 
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+" ********** Code Specific Settings **********
+" Don't require .jsx for syntax highlighting
+let g:jsx_ext_required = 0
+" Syntastic checkers
+let g:syntastic_javascript_checkers = ['eslint']
+" Indent Guides
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-" Ag search
-nmap <leader>f :Ag!
 
-" Get full path of file
-nmap <leader>pwd :echo expand('%:p')<CR>
-
+" *********** Settings **********
 " Centralize backups, swapfiles and undo history
 set backup
 set backupdir=~/.config/nvim/backups
@@ -92,29 +120,6 @@ set directory=~/.config/nvim/swaps
 set undofile
 set undodir=~/.config/nvim/undo
 set termguicolors
-
-" Easymotion binding and config
-nmap <space> <Plug>(easymotion-s2)
-let g:EasyMotion_smartcase = 1
-
-" Deoplete settings
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-" Don't require .jsx for syntax highlighting
-let g:jsx_ext_required = 0
-
-" Syntastic checkers
-let g:syntastic_javascript_checkers = ['eslint']
-
-" Python host locations
-let g:python3_host_prog = '/usr/local/bin/python3'
-
-" Split movement bindings
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 
 " Misc
 set clipboard+=unnamedplus
