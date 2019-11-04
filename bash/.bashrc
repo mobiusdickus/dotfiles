@@ -1,14 +1,15 @@
 ################################################################################
 # ---------- Bash prompt customization ----------
-export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
+#export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
+export PS1="\[\e[38;5;203m\]\u\[\e[m\]@\[\e[92m\]\h\[\e[m\]:\[\e[96m\]\W\[\e[m\]\\$ "
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 ################################################################################
 # ---------- Bash completion ----------
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
+#if [ -f $(brew --prefix)/etc/bash_completion ]; then
+#  . $(brew --prefix)/etc/bash_completion
+#fi
 
 ################################################################################
 # --------- Docker Machine ---------
@@ -16,8 +17,8 @@ fi
 
 #################################################################################
 # ---------- virtualenvwrapper ----------
-export WORKON_HOME=~/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+#export WORKON_HOME=~/.virtualenvs
+#source /usr/local/bin/virtualenvwrapper.sh
 
 #################################################################################
 # ---------- NVM ----------
@@ -78,7 +79,8 @@ eval "$(direnv hook bash)"
 
 #################################################################################
 # ---------- Misc ----------
-source /usr/local/opt/autoenv/activate.sh   # Load autoenv
+#source /usr/local/opt/autoenv/activate.sh   # Load autoenv
+#source ~/.apikeys                           # Load project based apikeys
 export GIT_EDITOR=nvim                      # Define git text editor
 export PYTHONDONTWRITEBYTECODE=True         # Don't produce .pyc or .pyo files
 export NVIM_TUI_ENABLE_TRUE_COLOR=1         # Set neovim terminal color

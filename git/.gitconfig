@@ -8,3 +8,5 @@
   co = checkout
 [merge]
 	tool = opendiff
+[push]
+	default = simple

@@ -111,6 +111,8 @@ let g:syntastic_javascript_checkers = ['eslint']
 " Indent Guides
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_enabled = 0
+" Python host locations
+let g:python3_host_prog = '/usr/bin/python3'
 
 " *********** Settings **********
 " Centralize backups, swapfiles and undo history
