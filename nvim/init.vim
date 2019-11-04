@@ -26,7 +26,7 @@ Plug 'jtratner/vim-flavored-markdown'
 Plug 'chr4/nginx.vim'
 Plug 'sheerun/vim-polyglot'
 " Coding Helpers
-Plug 'w0rp/ale'
+Plug 'vim-syntastic/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -64,7 +64,7 @@ hi CursorLine term=bold cterm=bold guibg=Grey20
 set mouse=a
 
 " ********** Status and Tab Settings **********
-let g:airline_theme = 'base16'
+let g:airline_theme = 'badwolf'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
@@ -110,7 +110,7 @@ let g:jsx_ext_required = 0
 let g:syntastic_javascript_checkers = ['eslint']
 " Indent Guides
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
+let g:indentLine_enabled = 0
 
 " *********** Settings **********
 " Centralize backups, swapfiles and undo history
@@ -122,7 +122,8 @@ set undodir=~/.config/nvim/undo
 set termguicolors
 
 " Misc
-set clipboard+=unnamedplus
+set number
+set hidden
 set cursorline
 set expandtab
 set gdefault
@@ -134,7 +135,6 @@ set shiftwidth=2
 set splitright
 set tabstop=2
 set wildchar=<TAB>
+set clipboard+=unnamedplus
 set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
 set wildignore+=*/smarty/*,*/vendor/*,*/node_modules/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*
-set number
-set hidden

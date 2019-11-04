@@ -73,6 +73,10 @@ export PYENV_ROOT=~/.pyenv
 eval "$(pyenv init -)"
 
 #################################################################################
+# ---------- Direnv ----------
+eval "$(direnv hook bash)"
+
+#################################################################################
 # ---------- Misc ----------
 source /usr/local/opt/autoenv/activate.sh   # Load autoenv
 export GIT_EDITOR=nvim                      # Define git text editor
