@@ -37,6 +37,9 @@ Separate work related bash configs for more managable profile
 $ mkdir ~/.work
 ```
 
+### Notes
+- vim-airline requires powerline fonts patch. If using iTerm ensure that powerline glyphs are enabled.
+
 ### To Do
 
 A script is in the works in order to help install all appropriate software needed in order to have these configs up and modifiable for both of my working platforms.

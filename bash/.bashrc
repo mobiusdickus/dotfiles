@@ -10,10 +10,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-################################################################################
-# --------- Docker Machine ---------
-#eval $(docker-machine env default)
-
 #################################################################################
 # ---------- virtualenvwrapper ----------
 export WORKON_HOME=~/.virtualenvs
@@ -21,8 +17,9 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 #################################################################################
 # ---------- NVM ----------
-export NVM_DIR="/Users/Chan/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #################################################################################
 # ---------- Eternal bash history ----------
