@@ -36,6 +36,12 @@ export HISTFILE=~/.bash_eternal_history
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # Bash History Realtime Update
 shopt -s histappend
+# Bash Search (up arrow)
+if [[ $- == *i* ]]
+then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+fi
 
 #################################################################################
 # ---------- Terminal Fuzzy Search ---------
