@@ -19,7 +19,7 @@ Plug 'honza/vim-snippets'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf.vim'
 " Code Specific Formats
-Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
 Plug 'fatih/vim-go'
 Plug 'jtratner/vim-flavored-markdown'
@@ -82,7 +82,8 @@ nnoremap <C-l> <C-w>l
 
 " ********** Autocompletion Settings **********
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+"let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option({'smart_case': v:true})
 " Python host locations
 let g:python3_host_prog = '/usr/local/bin/python3'
 
