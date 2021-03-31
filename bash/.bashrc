@@ -11,17 +11,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 #################################################################################
-# ---------- virtualenvwrapper ----------
-export WORKON_HOME=~/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
-
-#################################################################################
-# ---------- NVM ----------
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#################################################################################
 # ---------- Eternal bash history ----------
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
@@ -71,21 +60,11 @@ _completemarks() {
 complete -F _completemarks jump unmark
 
 #################################################################################
-# ---------- Pyenv ----------
-export PYENV_ROOT=~/.pyenv
-eval "$(pyenv init -)"
-
-#################################################################################
-# ---------- Direnv ----------
-eval "$(direnv hook bash)"
-
-#################################################################################
 # ---------- Misc ----------
-source /usr/local/opt/autoenv/activate.sh   # Load autoenv
 export GIT_EDITOR=nvim                      # Define git text editor
 export PYTHONDONTWRITEBYTECODE=True         # Don't produce .pyc or .pyo files
 export NVIM_TUI_ENABLE_TRUE_COLOR=1         # Set neovim terminal color
-export PATH="$PYENV_ROOT/bin:$PATH:$HOME/.poetry/bin"
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 #################################################################################
 # ---------- Aliases ----------
@@ -96,7 +75,6 @@ alias ls='ls -G'
 alias ll='ls -laF'
 alias l='ls -CF'
 alias nvf=findInput
-#alias api="docker exec -it api"
 
 #################################################################################
 # ---------- Internal Functions ----------
