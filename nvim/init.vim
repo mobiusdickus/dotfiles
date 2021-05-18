@@ -114,6 +114,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 " Indent Guides
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_enabled = 0
+let g:is_bash = 1
 
 " *********** Settings **********
 " Centralize backups, swapfiles and undo history
