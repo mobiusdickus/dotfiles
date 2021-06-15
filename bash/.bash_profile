@@ -6,14 +6,20 @@ if [ -f ~/.work ]; then
   source ~/.work
 fi
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+#################################################################################
+# ---------- alias ----------
+alias kube="kubectl"
+alias mk="minikube"
+alias kns="kubens"
+alias free="ruby ~/Applications/free-memory.rb"
+alias da="deactivate"
+alias wo="workon"
+alias gc="gcloud"
 
-export PATH="$HOME/.poetry/bin:$PATH"
+eval "$(direnv hook bash)"
 
-export BASH_SILENCE_DEPRECATION_WARNING=1
+#################################################################################
+# ---------- gcloud sdk ----------
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/chan/google-cloud-sdk/path.bash.inc' ]; then . '/Users/chan/google-cloud-sdk/path.bash.inc'; fi
@@ -21,3 +27,42 @@ if [ -f '/Users/chan/google-cloud-sdk/path.bash.inc' ]; then . '/Users/chan/goog
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/chan/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/chan/google-cloud-sdk/completion.bash.inc'; fi
 
+
+#################################################################################
+# ---------- nvm ----------
+export NVM_DIR="$HOME/.nvm"
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+# This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+
+#################################################################################
+# ---------- rbenv ----------
+
+eval "$(rbenv init -)"
+
+#################################################################################
+# ---------- pyenv ----------
+export PATH=/Users/chan/.pyenv/shims/python2:$PATH
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
+export PYENV_ROOT=~/.pyenv
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv init virtualenv-init -)"
+
+#################################################################################
+# ---------- poetry ----------
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+#################################################################################
+# ---------- Virtualenv & Virtialenvwrapper ----------
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+pyenv virtualenvwrapper_lazy
+
+#################################################################################
+# ---------- terraform ----------
+
+complete -C /usr/local/bin/terraform terraform
