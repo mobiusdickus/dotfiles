@@ -21,7 +21,7 @@ Plug 'junegunn/fzf.vim'
 " Code Specific Formats
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pangloss/vim-javascript'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'chr4/nginx.vim'
 Plug 'sheerun/vim-polyglot'
@@ -86,7 +86,7 @@ let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({'smart_case': v:true})
 " Python host locations
 let g:python_host_prog  = "$HOME/.pyenv/versions/2.7.18/bin/python"
-let g:python3_host_prog = "$HOME/.pyenv/versions/3.9.2/bin/python"
+let g:python3_host_prog = "$HOME/.pyenv/versions/3.10.10/bin/python"
 let g:ruby_host_prog = "$HOME/.rbenv/shims/neovim-ruby-host"
 
 " ********** Search Settings **********
