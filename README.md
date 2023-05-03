@@ -23,16 +23,8 @@ $ sudo apt-get install stow
 ```bash
 $ git clone https://github.com/mobiusdickus/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
-$ stow bash vim git # some .dotfiles dir name containing config files
+$ stow bash -t ~/ 
+$ stow nvim -t ~/.config/nvim/
 ```
 
-To symlink to directories other than your home directory use the -t flag
-
-```bash
-$ stow nvim -t ~/.config/nvim/ # example
-```
-
-Separate work related bash configs for more manageable profile
-```bash
-$ mkdir ~/.work
-```
+It might be useful to separate work related bash configs in a `~/.work` file and load that from your `~/.bash_profile` for cleaner configs and environment.
