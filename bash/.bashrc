@@ -1,17 +1,13 @@
-################################################################################
-# ---------- Bash prompt customization ----------
+#echo "Loading bashrc..."
+
+#_______________________________________________________________________________
+# --> Bash prompt customization
 export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
-################################################################################
-# ---------- Bash completion ----------
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
-
-#################################################################################
-# ---------- Eternal bash history ----------
+#_______________________________________________________________________________
+# --> Eternal bash history
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
 export HISTFILESIZE=
@@ -32,12 +28,12 @@ then
     bind '"\e[B": history-search-forward'
 fi
 
-#################################################################################
-# ---------- Terminal Fuzzy Search ---------
+#_______________________________________________________________________________
+# --> Terminal Fuzzy Search
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-#################################################################################
-# ---------- Jump ----------
+#_______________________________________________________________________________
+# --> Mark & Jump
 export MARKPATH=$HOME/.marks
 function jump {
     cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
@@ -58,26 +54,3 @@ _completemarks() {
   return 0
 }
 complete -F _completemarks jump unmark
-
-#################################################################################
-# ---------- Misc ----------
-export GIT_EDITOR=nvim                      # Define git text editor
-export PYTHONDONTWRITEBYTECODE=True         # Don't produce .pyc or .pyo files
-export NVIM_TUI_ENABLE_TRUE_COLOR=1         # Set neovim terminal color
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
-#################################################################################
-# ---------- Aliases ----------
-alias nv="nvim"
-alias da="deactivate"
-alias dcd="deactivate; cd;"
-alias ls='ls -G'
-alias ll='ls -laF'
-alias l='ls -CF'
-alias nvf=findInput
-
-#################################################################################
-# ---------- Internal Functions ----------
-findInput() {
-  nv $(find . -name *$1*)
-}
