@@ -14,7 +14,7 @@
 
 ## Set Up
 
-After syslinking the nvim files, neovim will give you a lot of errors. Here are some key things to check.
+After symlinking the nvim files, neovim will give you a lot of errors. Here are some key things to check.
 
 - Run `:checkhealth` inside nvim.
   - In general just follow the check list here to get things working.
