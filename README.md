@@ -1,14 +1,14 @@
 # dotfiles
 
-My personal custom configuration files.
-The goal is to make transporting my setup across platforms as smoothly and easily as possible. 
+My personal config files for various tools and applications.
 
-## About
+In order to centralize and have everything version controlled from this project, I am using [GNU stow](https://www.gnu.org/software/stow/), a symlink farm manager.
 
-I am currently managing my all of my dotfiles with [GNU stow](https://www.gnu.org/software/stow/),
-a symlink farm manager, and work locally with mac os x and remotely with an ubuntu 16.04 machine.
+- **05/03/23: macOS on silicone**
 
-Mac OS X
+## Dependencies
+
+macOS
 ```bash
 $ brew install stow
 ```
@@ -32,14 +32,7 @@ To symlink to directories other than your home directory use the -t flag
 $ stow nvim -t ~/.config/nvim/ # example
 ```
 
-Separate work related bash configs for more managable profile
+Separate work related bash configs for more manageable profile
 ```bash
 $ mkdir ~/.work
 ```
-
-### Notes
-- vim-airline requires powerline fonts patch. If using iTerm ensure that powerline glyphs are enabled.
-
-### To Do
-
-A script is in the works in order to help install all appropriate software needed in order to have these configs up and modifiable for both of my working platforms.
