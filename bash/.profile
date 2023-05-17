@@ -21,6 +21,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #_______________________________________________________________________________
+# --> go
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+
+#_______________________________________________________________________________
 # --> Aliases
 alias ll="ls -la"
 alias nv="nvim"
