@@ -7,3 +7,5 @@ fi
 if [ -f ~/.bashrc ]; then 
     .  ~/.bashrc; 
 fi
+
+complete -C /opt/homebrew/bin/terraform terraform
