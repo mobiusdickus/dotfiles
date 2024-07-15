@@ -27,9 +27,14 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 
 #_______________________________________________________________________________
+# --> psql
+export PATH="$PATH:/Library/PostgreSQL/15/bin"
+
+#_______________________________________________________________________________
 # --> Aliases
 alias ll="ls -la"
 alias nv="nvim"
+alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
 
 #_______________________________________________________________________________
 # --> Misc

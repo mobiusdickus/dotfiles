@@ -2,9 +2,40 @@
 
 #_______________________________________________________________________________
 # --> Bash prompt customization
-export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
+#export PS1="❮\[\e[32m\]\h\[\e[m\]❯\[\e[36m\]\W\[\e[m\]:\[\e[37m\]\u\[\e[m\]$ "
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
+
+get_gcp_project() {
+    gcloud config get-value project 2>/dev/null
+}
+
+get_git_branch() {
+    git branch --show-current 2>/dev/null
+}
+
+# Function to update the prompt
+update_prompt() {
+    local GCP_PROJECT=""
+    local GIT_BRANCH=""
+    
+    GIT_BRANCH=$(get_git_branch)
+    
+    if [ -n "$GIT_BRANCH" ]; then
+        GCP_PROJECT=$(get_gcp_project)
+    fi
+    
+    PS1="\n❮\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\]❯ \[\e[38;5;245m\]\w\[\e[m\]"
+    
+    if [ -n "$GIT_BRANCH" ]; then
+        PS1+=" ❯ \[\e[38;5;214m\]($GCP_PROJECT)\[\e[m\] ❯ \[\e[32m\][$GIT_BRANCH]\[\e[m\]"
+    fi
+
+    PS1+="\n~$ "
+}
+
+# Hook the update_prompt function into the prompt command
+PROMPT_COMMAND=update_prompt;
 
 #_______________________________________________________________________________
 # --> Eternal bash history
@@ -59,3 +90,10 @@ complete -F _completemarks jump unmark
 # --> direnv
 eval "$(direnv hook bash)"
 
+#_______________________________________________________________________________
+# --> gcloud CLI
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/chan/google-cloud-sdk/path.bash.inc' ]; then . '/Users/chan/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/chan/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/chan/google-cloud-sdk/completion.bash.inc'; fi
