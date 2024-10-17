@@ -22,13 +22,18 @@ update_prompt() {
     GIT_BRANCH=$(get_git_branch)
     
     if [ -n "$GIT_BRANCH" ]; then
-        GCP_PROJECT=$(get_gcp_project)
+        if [[ "$PWD" == *"goodlynx"* ]]; then
+            GCP_PROJECT=$(get_gcp_project)
+        fi
     fi
     
     PS1="\n❮\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\]❯ \[\e[38;5;245m\]\w\[\e[m\]"
     
     if [ -n "$GIT_BRANCH" ]; then
-        PS1+=" ❯ \[\e[38;5;214m\]($GCP_PROJECT)\[\e[m\] ❯ \[\e[32m\][$GIT_BRANCH]\[\e[m\]"
+        if [[ "$PWD" == *"goodlynx"* ]] && [ -n "$GCP_PROJECT" ]; then
+            PS1+=" ❯ \[\e[38;5;214m\]($GCP_PROJECT)\[\e[m\]"
+        fi
+        PS1+=" ❯ \[\e[32m\][$GIT_BRANCH]\[\e[m\]"
     fi
 
     PS1+="\n~$ "
