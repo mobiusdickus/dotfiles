@@ -36,6 +36,7 @@ alias ll="ls -la"
 alias nv="nvim"
 alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
+alias mk="minikube"
 
 #_______________________________________________________________________________
 # --> Misc
