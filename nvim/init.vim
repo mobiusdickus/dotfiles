@@ -2,7 +2,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mkarmona/colorsbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -53,11 +52,10 @@ let mapleader=","
 map <leader>n :NERDTreeToggle<CR>
 
 " ********** Colorscheme Settings **********
-colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'hard'
+colorscheme unokai
+"let g:gruvbox_contrast_dark = 'hard'
 
 " ********** Cursor Settings **********
-color gruvbox
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey20
 " Enable mouse events
@@ -70,7 +68,10 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#exclude_preview = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#hunks#enabled=0
 " Cycle through buffers
 nmap <leader><Tab> :bn<CR>
 nmap <leader>` :bp<CR>
@@ -85,7 +86,7 @@ let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
 call deoplete#custom#option({'smart_case': v:true})
 " Python host locations
-let g:python3_host_prog = "$HOME/.pyenv/versions/3.10.11/bin/python"
+let g:python3_host_prog = "$HOME/.pyenv/versions/3.13.3/bin/python"
 let g:ruby_host_prog = "/usr/bin/ruby"
 let g:loaded_perl_provider = 0
 
