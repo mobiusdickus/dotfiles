@@ -36,3 +36,11 @@ export OPENSSL_DIR="/usr/bin/openssl"
 
 # Bash deprecation silence (harmless)
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# virtualenvwrapper
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENVWRAPPER_PYTHON=$(which python)
+
+# pyenv-virtualenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"

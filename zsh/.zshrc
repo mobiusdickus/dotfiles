@@ -48,11 +48,19 @@ get_git_branch() {
     fi
 }
 
+get_virtualenv() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "$(basename "$VIRTUAL_ENV")"
+    fi
+}
+
 update_prompt() {
     local GCP_PROJECT=""
     local GIT_BRANCH=""
+    local VIRTUALENV=""
 
     GIT_BRANCH=$(get_git_branch)
+    VIRTUALENV=$(get_virtualenv)
 
     PROMPT="%F{cyan}%n%f@%F{magenta}%m%f ❯ %F{245}%~%f"
 
@@ -63,6 +71,12 @@ update_prompt() {
                 PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
             fi
         fi
+
+        # Add virtualenv before git branch if it exists
+        if [[ -n "$VIRTUALENV" ]]; then
+            PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
+        fi
+
         PROMPT+=" ❯ %F{green}[$GIT_BRANCH]%f"
     fi
 
@@ -135,3 +149,7 @@ fi
 if type terraform > /dev/null 2>&1; then
     complete -o nospace -C $(which terraform) terraform
 fi
+
+# ------------------------------------------------------------------------------
+# virtualenvwrapper
+source $(which virtualenvwrapper.sh)
