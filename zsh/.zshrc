@@ -1,11 +1,12 @@
-# ~/.zshrc
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 
 # ------------------------------------------------------------------------------
-# Early setup: colors + completion
-autoload -Uz colors compinit up-line-or-beginning-search down-line-or-beginning-search
-
-colors
-compinit -C  # Defer loading of completion system slightly
+# Prezto
+# ------------------------------------------------------------------------------
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
 # ------------------------------------------------------------------------------
 # Terminal colors
@@ -22,6 +23,7 @@ setopt INC_APPEND_HISTORY
 
 # ------------------------------------------------------------------------------
 # Arrow key search
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
@@ -31,16 +33,10 @@ bindkey "^[[B" down-line-or-beginning-search
 # Prompt setup
 setopt PROMPT_SUBST
 
-get_gcp_project() {
-    gcloud config get-value project 2>/dev/null
-}
-
 get_git_branch() {
     local branch
     branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return
-
     if [[ -n "$branch" ]]; then
-        # Check if there are uncommitted changes
         if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
             branch="$branch *"
         fi
@@ -49,36 +45,34 @@ get_git_branch() {
 }
 
 get_virtualenv() {
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        echo "$(basename "$VIRTUAL_ENV")"
-    fi
+    [[ -n "$VIRTUAL_ENV" ]] && echo "$(basename "$VIRTUAL_ENV")"
+}
+
+get_aws_profile() {
+    [[ -n "$AWS_PROFILE" ]] && echo "$AWS_PROFILE"
+}
+
+get_gcp_project() {
+    gcloud config get-value project 2>/dev/null
 }
 
 update_prompt() {
-    local GCP_PROJECT=""
-    local GIT_BRANCH=""
-    local VIRTUALENV=""
-
-    GIT_BRANCH=$(get_git_branch)
-    VIRTUALENV=$(get_virtualenv)
+    local GIT_BRANCH=$(get_git_branch)
+    local VIRTUALENV=$(get_virtualenv)
+    local AWS_PROF=$(get_aws_profile)
 
     PROMPT="%F{cyan}%n%f@%F{magenta}%m%f ❯ %F{245}%~%f"
 
     if [[ -n "$GIT_BRANCH" ]]; then
         if [[ "$PWD" == *"goodlynx"* ]]; then
-            GCP_PROJECT=$(get_gcp_project)
-            if [[ -n "$GCP_PROJECT" ]]; then
-                PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
-            fi
+            local GCP_PROJECT=$(get_gcp_project)
+            [[ -n "$GCP_PROJECT" ]] && PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
         fi
-
-        # Add virtualenv before git branch if it exists
-        if [[ -n "$VIRTUALENV" ]]; then
-            PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
-        fi
-
+        [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
         PROMPT+=" ❯ %F{green}[$GIT_BRANCH]%f"
     fi
+
+    [[ -n "$AWS_PROF" ]] && PROMPT+=" ❯ %F{208}aws:$AWS_PROF%f"
 
     PROMPT+="
 ~$ "
@@ -88,34 +82,48 @@ precmd_functions+=(update_prompt)
 
 # ------------------------------------------------------------------------------
 # Aliases
-alias ll="ls -la"
+alias ls="lsd"
+alias ll="lsd -la"
+alias lt="lsd --tree"
 alias nv="nvim"
 alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
+alias kc="kiro-cli"
+alias kcr="kiro-cli chat --resume"
+alias kct="kiro-cli --tui"
+alias kcrt="kiro-cli chat --resume --tui"
+
+# AWS profile switcher
+awsp() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: awsp <profile-name> | awsp clear"
+        return 1
+    fi
+    if [[ "$1" == "clear" ]]; then
+        unset AWS_PROFILE
+        echo "Cleared AWS profile"
+        return 0
+    fi
+    if ! aws configure list-profiles | grep -q "^$1$"; then
+        echo "Error: Profile '$1' not found"
+        echo "Available profiles:"
+        aws configure list-profiles
+        return 1
+    fi
+    export AWS_PROFILE=$1
+    echo "Switched to AWS profile: $1"
+}
 
 # ------------------------------------------------------------------------------
 # Mark & Jump system
 export MARKPATH=$HOME/.marks
 
-mark() {
-    mkdir -p "$MARKPATH"
-    ln -s "$(pwd)" "$MARKPATH/$1"
-}
+mark() { mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"; }
+jump() { cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"; }
+unmark() { rm -i "$MARKPATH/$1"; }
+marks() { ls -l "$MARKPATH" | awk '{print $9}' | sed 's/ -/ -/'; }
 
-jump() {
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
-}
-
-unmark() {
-    rm -i "$MARKPATH/$1"
-}
-
-marks() {
-    ls -l "$MARKPATH" | awk '{print $9}' | sed 's/ -/ -/'
-}
-
-# Autocomplete for marks
 _jump_mark() {
     local -a marks
     marks=($(ls "$MARKPATH"))
@@ -124,32 +132,30 @@ _jump_mark() {
 compdef _jump_mark jump unmark
 
 # ------------------------------------------------------------------------------
-# Lazy loading heavy things
-# ------------------------------------------------------------------------------
-# Load fzf if available
-if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
-fi
+# Lazy loading
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
+[ -f '/Users/chan/google-cloud-sdk/path.zsh.inc' ] && source '/Users/chan/google-cloud-sdk/path.zsh.inc'
+[ -f '/Users/chan/google-cloud-sdk/completion.zsh.inc' ] && source '/Users/chan/google-cloud-sdk/completion.zsh.inc'
+type terraform > /dev/null 2>&1 && autoload -U +X bashcompinit && bashcompinit && complete -o nospace -C $(which terraform) terraform
 
-# Load direnv
-if command -v direnv >/dev/null 2>&1; then
-    eval "$(direnv hook zsh)"
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# Load gcloud SDK bits if available
-if [ -f '/Users/chan/google-cloud-sdk/path.zsh.inc' ]; then
-    source '/Users/chan/google-cloud-sdk/path.zsh.inc'
-fi
-if [ -f '/Users/chan/google-cloud-sdk/completion.zsh.inc' ]; then
-    source '/Users/chan/google-cloud-sdk/completion.zsh.inc'
-fi
+# Docker CLI completions
+fpath=(/Users/cchan/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
 
-# ------------------------------------------------------------------------------
-# Terraform autocomplete
-if type terraform > /dev/null 2>&1; then
-    complete -o nospace -C $(which terraform) terraform
-fi
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# ------------------------------------------------------------------------------
-# virtualenvwrapper
-source $(which virtualenvwrapper.sh)
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+# egcli
+if [ -f '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc' ]; then . '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc'; fi
+
+# Source work credentials
+[ -f ~/.work ] && source ~/.work
