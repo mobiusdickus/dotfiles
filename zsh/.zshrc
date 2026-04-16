@@ -57,21 +57,22 @@ get_gcp_project() {
 }
 
 update_prompt() {
-    local GIT_BRANCH=$(get_git_branch)
+    # local GIT_BRANCH=$(get_git_branch)
     local VIRTUALENV=$(get_virtualenv)
     local AWS_PROF=$(get_aws_profile)
 
     PROMPT="%F{cyan}%n%f@%F{magenta}%m%f ❯ %F{245}%~%f"
 
-    if [[ -n "$GIT_BRANCH" ]]; then
-        if [[ "$PWD" == *"goodlynx"* ]]; then
-            local GCP_PROJECT=$(get_gcp_project)
-            [[ -n "$GCP_PROJECT" ]] && PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
-        fi
-        [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
-        PROMPT+=" ❯ %F{green}[$GIT_BRANCH]%f"
-    fi
+    # if [[ -n "$GIT_BRANCH" ]]; then
+    #     if [[ "$PWD" == *"goodlynx"* ]]; then
+    #         local GCP_PROJECT=$(get_gcp_project)
+    #         [[ -n "$GCP_PROJECT" ]] && PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
+    #     fi
+    #     [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
+    #     PROMPT+=" ❯ %F{green}[$GIT_BRANCH]%f"
+    # fi
 
+    [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
     [[ -n "$AWS_PROF" ]] && PROMPT+=" ❯ %F{208}aws:$AWS_PROF%f"
 
     PROMPT+="
@@ -90,9 +91,7 @@ alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
 alias kc="kiro-cli"
-alias kcr="kiro-cli chat --resume"
-alias kct="kiro-cli --tui"
-alias kcrt="kiro-cli chat --resume --tui"
+alias kcr="kiro-cli --resume"
 
 # AWS profile switcher
 awsp() {
@@ -157,5 +156,3 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # egcli
 if [ -f '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc' ]; then . '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc'; fi
 
-# Source work credentials
-[ -f ~/.work ] && source ~/.work

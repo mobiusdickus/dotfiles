@@ -6,6 +6,7 @@
 	b = branch
 	s = status
   co = checkout
+	tree = log --oneline --graph --decorate --all
 [merge]
 	tool = opendiff
 [http]

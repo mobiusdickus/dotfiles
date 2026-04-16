@@ -28,6 +28,12 @@ require("lazy").setup({
     vim.cmd.colorscheme("catppuccin")
   end },
 
+  -- Buffer tabs
+  { "akinsho/bufferline.nvim", version = "*", dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("bufferline").setup()
+    end },
+
   -- Status line
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
@@ -37,7 +43,7 @@ require("lazy").setup({
   -- File explorer
   { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = { { "<leader>n", "<cmd>NvimTreeToggle<CR>", desc = "Toggle file tree" } },
-    config = function() require("nvim-tree").setup() end },
+    config = function() require("nvim-tree").setup({ filters = { git_ignored = false } }) end },
 
   -- Fuzzy finder (replaces ctrlp, fzf, ack)
   { "nvim-telescope/telescope.nvim", branch = "master",
@@ -90,6 +96,15 @@ require("lazy").setup({
   -- Emmet
   { "mattn/emmet-vim", ft = { "html", "css", "jsx", "tsx", "vue", "svelte" } },
 
+  -- Terminal
+  { "akinsho/toggleterm.nvim", version = "*", config = function()
+    require("toggleterm").setup({
+      open_mapping = [[<C-\>]],
+      direction = "horizontal",
+      size = 15,
+    })
+  end },
+
   -- LSP
   { "williamboman/mason.nvim", config = function() require("mason").setup() end },
   { "williamboman/mason-lspconfig.nvim", dependencies = { "williamboman/mason.nvim" },
@@ -126,7 +141,7 @@ require("lazy").setup({
 
   -- LSP UI
   { "nvimdev/lspsaga.nvim", event = "LspAttach", dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function() require("lspsaga").setup() end },
+    config = function() require("lspsaga").setup({ lightbulb = { enable = false } }) end },
 
   -- Completion
   { "hrsh7th/nvim-cmp", event = "InsertEnter",
