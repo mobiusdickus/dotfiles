@@ -1,59 +1,58 @@
 # dotfiles
 
-Personal config files managed with [GNU stow](https://www.gnu.org/software/stow/).
+Personal config files managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-- **04/13/26: Neovim migrated to lazy.nvim, Zsh migrated to Prezto**
-- **05/03/23: macOS on silicone**
+## Setup
 
-## Dependencies
+```bash
+git clone https://github.com/mobiusdickus/dotfiles.git ~/projects/personal/dotfiles
+cd ~/projects/personal/dotfiles
+```
 
 ```bash
 brew install stow neovim tree-sitter-cli ripgrep lsd
 brew install --cask font-hack-nerd-font
 ```
 
-Prezto (one-time):
-```bash
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-```
-
-## Usage
+### Zsh + Zprezto
 
 ```bash
-git clone https://github.com/mobiusdickus/dotfiles.git ~/projects/personal/dotfiles
-cd ~/projects/personal/dotfiles
-
-# Zsh (includes .zshrc and .zpreztorc)
-stow zsh -t ~/
-
-# Neovim
-stow nvim -t ~/.config/nvim/
-
-# Bash (legacy)
-stow bash -t ~/
+./setup-zsh.sh
 ```
+
+Clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows zsh configs, and sets zsh as default shell.
+
+### Neovim
+
+```bash
+./setup-nvim.sh
+```
+
+Stows `init.lua` into `~/.config/nvim/` and syncs [lazy.nvim](https://github.com/folke/lazy.nvim) plugins.
 
 ## Structure
 
 ```
-├── nvim/
-│   ├── init.lua          # Neovim config (lazy.nvim)
-│   ├── init.vim.old      # Previous vim-plug config (backup)
-│   └── README.md
 ├── zsh/
 │   ├── .zshrc            # Zsh config (prezto + custom prompt/aliases)
-│   ├── .zpreztorc        # Prezto module config
-│   └── .zshrc.old        # Previous .zshrc (backup)
+│   ├── .zshenv           # Env vars for non-interactive shells
+│   ├── .zprofile         # Login shell setup (PATH, tools)
+│   └── .zpreztorc        # Prezto module config
+├── nvim/.config/nvim/
+│   └── init.lua          # Neovim config (lazy.nvim)
+├── git/
+│   └── .gitconfig
 ├── bash/
 │   ├── .bashrc
 │   ├── .bash_profile
 │   └── .profile
-├── git/
-│   └── .gitconfig
-├── vim/
-│   └── vimrc
-└── keybindings/
-    └── .inputrc
+├── keybindings/
+│   └── .inputrc
+├── setup-zsh.sh
+└── setup-nvim.sh
 ```
 
-It might be useful to separate work related configs in a `~/.work` file and source it from your shell config.
+## Notes
+
+- Work credentials live in `~/.work` (sourced from `.zshenv`, not tracked).
+- Old configs (`.zshrc.old`, `init.vim.old`) kept as backups.
