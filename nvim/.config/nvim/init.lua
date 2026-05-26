@@ -49,7 +49,7 @@ require("lazy").setup({
   -- File explorer
   { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = { { "<leader>n", "<cmd>NvimTreeToggle<CR>", desc = "Toggle file tree" } },
-    config = function() require("nvim-tree").setup({ filters = { git_ignored = false } }) end },
+    config = function() require("nvim-tree").setup({ filters = { git_ignored = false, custom = { "__pycache__", "\\.DS_Store", "\\.mypy_cache", "\\.pytest_cache", "\\.ruff_cache", "node_modules" } } }) end },
 
   -- Fuzzy finder (replaces ctrlp, fzf, ack)
   { "nvim-telescope/telescope.nvim", branch = "master",
@@ -101,6 +101,10 @@ require("lazy").setup({
 
   -- Emmet
   { "mattn/emmet-vim", ft = { "html", "css", "jsx", "tsx", "vue", "svelte" } },
+
+  -- Viewers
+  { "MeanderingProgrammer/render-markdown.nvim", main = "render-markdown", ft = "markdown", dependencies = { "nvim-treesitter/nvim-treesitter" }, opts = {} },
+  { "hat0uma/csvview.nvim", ft = "csv", opts = { view = { display_mode = "border" } } },
 
   -- Terminal
   { "akinsho/toggleterm.nvim", version = "*", config = function()
