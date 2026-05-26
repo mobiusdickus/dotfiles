@@ -1,0 +1,5 @@
+.work
+.env
+*.pem
+credentials*
+.DS_Store
