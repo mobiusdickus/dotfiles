@@ -178,13 +178,13 @@ vim.keymap.set("n", "<leader><Tab>", "<cmd>bn<CR>")
 vim.keymap.set("n", "<leader>`", "<cmd>bp<CR>")
 
 -- Split navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Surround word shortcut: ,w then type the surround char
 vim.keymap.set("n", "<leader>w", "ysiw", { remap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>h")
-vim.keymap.set("n", "<C-h>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Backup / undo / swap
 vim.opt.backup = true
