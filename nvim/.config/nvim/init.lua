@@ -61,6 +61,13 @@ require("lazy").setup({
       { "<leader>r", "<cmd>Telescope tags<CR>", desc = "Tags" },
     },
   },
+  { "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>f", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", desc = "File browser" },
+    },
+    config = function() require("telescope").load_extension("file_browser") end,
+  },
 
   -- Treesitter (replaces vim-polyglot)
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = function()
@@ -174,6 +181,7 @@ require("lazy").setup({
 })
 
 -- Buffer navigation
+vim.keymap.set("n", "<leader>q", "<cmd>q<CR>")
 vim.keymap.set("n", "<leader><Tab>", "<cmd>bn<CR>")
 vim.keymap.set("n", "<leader>`", "<cmd>bp<CR>")
 

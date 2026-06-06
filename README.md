@@ -54,5 +54,6 @@ Stows `init.lua` into `~/.config/nvim/` and syncs [lazy.nvim](https://github.com
 
 ## Notes
 
+- Secrets (API keys, tokens) live in `~/.secrets` (sourced from `.zshrc`, not tracked).
 - Work credentials live in `~/.work` (sourced from `.zshenv`, not tracked).
 - Old configs (`.zshrc.old`, `init.vim.old`) kept as backups.

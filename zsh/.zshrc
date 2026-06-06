@@ -1,5 +1,7 @@
+
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 
 # ------------------------------------------------------------------------------
 # Prezto
@@ -91,7 +93,8 @@ alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
 alias kc="kiro-cli"
-alias kcr="kiro-cli --resume"
+alias kcr="kiro-cli chat --resume"
+alias kcl="kiro-cli login"
 
 # AWS profile switcher
 awsp() {
@@ -150,9 +153,17 @@ compinit
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
 
 # egcli
 if [ -f '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc' ]; then . '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc'; fi
 
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+# Logi Build Haptics
+source ~/.config/logi-build-haptics/integration.zsh
+
+
+[ -f ~/.secrets ] && source ~/.secrets

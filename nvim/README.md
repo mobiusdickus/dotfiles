@@ -28,6 +28,7 @@ Open `nvim` — lazy.nvim bootstraps itself and installs all plugins on first la
 | Status | lualine | Status line |
 | Files | nvim-tree | File explorer |
 | Search | telescope | Fuzzy finder (files, grep, buffers) |
+| Search | telescope-file-browser | File browser within telescope |
 | Syntax | treesitter | Syntax highlighting via AST |
 | LSP | nvim-lspconfig + mason | Language servers (pyright, ts_ls, gopls, terraformls, lua_ls) |
 | LSP UI | lspsaga | Enhanced LSP interactions |
@@ -46,10 +47,12 @@ Leader: `,`
 | Key | Action |
 |-----|--------|
 | `,n` | Toggle file tree |
+| `,f` | File browser (telescope) |
 | `,t` | Find files |
 | `,a` | Live grep |
 | `,b` | Buffers |
 | `,r` | Tags |
+| `,q` | Quit window |
 | `,db` | Toggle DB UI |
 | `,w` + char | Surround word |
 | `,Tab` / `,`` ` | Next/prev buffer |
