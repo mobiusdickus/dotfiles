@@ -1,3 +1,7 @@
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/profile.pre.bash"
+
 #echo "Loading profile..."
 
 #_______________________________________________________________________________
@@ -42,3 +46,7 @@ alias mk="minikube"
 # --> Misc
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export OPENSSL_DIR="/usr/bin/openssl"
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/profile.post.bash"

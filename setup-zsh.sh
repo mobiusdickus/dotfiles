@@ -11,6 +11,11 @@ if ! command -v stow &>/dev/null; then
   brew install stow
 fi
 
+if ! command -v lsd &>/dev/null; then
+  info "Installing lsd via Homebrew..."
+  brew install lsd
+fi
+
 if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   info "Cloning Zprezto..."
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"

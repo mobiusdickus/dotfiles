@@ -10,5 +10,6 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
-# Source work credentials (in .zshenv so non-interactive processes like MCP servers get them)
+# Source credentials (in .zshenv so non-interactive processes like MCP servers get them)
+[ -f ~/.secrets ] && source ~/.secrets
 [ -f ~/.work ] && source ~/.work
