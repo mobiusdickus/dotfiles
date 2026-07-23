@@ -95,6 +95,7 @@ alias mk="minikube"
 alias kc="kiro-cli"
 alias kcr="kiro-cli chat --resume"
 alias kcl="kiro-cli login"
+alias antig="agy"
 
 # AWS profile switcher
 awsp() {
@@ -167,3 +168,7 @@ source ~/.config/logi-build-haptics/integration.zsh
 
 
 [ -f ~/.secrets ] && source ~/.secrets
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/chan/.local/bin:$PATH"

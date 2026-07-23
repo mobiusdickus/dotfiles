@@ -116,3 +116,7 @@ if [ -f '/Users/chan/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/cha
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/chan/.local/bin:$PATH"

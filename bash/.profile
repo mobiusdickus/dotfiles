@@ -50,3 +50,7 @@ export OPENSSL_DIR="/usr/bin/openssl"
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/profile.post.bash"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/chan/.local/bin:$PATH"
