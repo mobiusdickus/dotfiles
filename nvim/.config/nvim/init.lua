@@ -49,7 +49,7 @@ require("lazy").setup({
   -- File explorer
   { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = { { "<leader>n", "<cmd>NvimTreeToggle<CR>", desc = "Toggle file tree" } },
-    config = function() require("nvim-tree").setup({ filters = { git_ignored = false } }) end },
+    config = function() require("nvim-tree").setup({ filters = { git_ignored = false, custom = { "__pycache__", "\\.DS_Store", "\\.mypy_cache", "\\.pytest_cache", "\\.ruff_cache", "node_modules" } } }) end },
 
   -- Fuzzy finder (replaces ctrlp, fzf, ack)
   { "nvim-telescope/telescope.nvim", branch = "master",
@@ -95,12 +95,6 @@ require("lazy").setup({
   "tpope/vim-fugitive",
   { "lewis6991/gitsigns.nvim", config = function() require("gitsigns").setup() end },
 
-  -- Markdown rendering
-  { "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown" },
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    config = function() require("render-markdown").setup() end },
-
   -- Markdown browser preview
   { "toppair/peek.nvim", build = "deno task --quiet build:fast", ft = { "markdown" },
     keys = {
@@ -124,6 +118,13 @@ require("lazy").setup({
 
   -- Emmet
   { "mattn/emmet-vim", ft = { "html", "css", "jsx", "tsx", "vue", "svelte" } },
+
+  -- Viewers
+  { "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    config = function() require("render-markdown").setup() end },
+  { "hat0uma/csvview.nvim", ft = "csv", opts = { view = { display_mode = "border" } } },
 
   -- Terminal
   { "akinsho/toggleterm.nvim", version = "*", config = function()
@@ -202,13 +203,13 @@ vim.keymap.set("n", "<leader><Tab>", "<cmd>bn<CR>")
 vim.keymap.set("n", "<leader>`", "<cmd>bp<CR>")
 
 -- Split navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Surround word shortcut: ,w then type the surround char
 vim.keymap.set("n", "<leader>w", "ysiw", { remap = true })
-vim.keymap.set("n", "<C-k>", "<C-w>h")
-vim.keymap.set("n", "<C-h>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Backup / undo / swap
 vim.opt.backup = true

@@ -65,7 +65,3 @@ Leader: `,`
 | `,e` | Line diagnostics |
 | `,o` | Outline |
 | `[d` / `]d` | Prev/next diagnostic |
-
-## Old Config
-
-The previous vim-plug config is preserved in `init.vim.old`.

@@ -2,7 +2,6 @@
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 
-
 # ------------------------------------------------------------------------------
 # Prezto
 # ------------------------------------------------------------------------------
@@ -89,7 +88,7 @@ alias ls="lsd"
 alias ll="lsd -la"
 alias lt="lsd --tree"
 alias nv="nvim"
-alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
+alias cloud-sql-proxy="$HOME/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
 alias kc="kiro-cli"
@@ -138,13 +137,7 @@ compdef _jump_mark jump unmark
 # Lazy loading
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
-[ -f '/Users/chan/google-cloud-sdk/path.zsh.inc' ] && source '/Users/chan/google-cloud-sdk/path.zsh.inc'
-[ -f '/Users/chan/google-cloud-sdk/completion.zsh.inc' ] && source '/Users/chan/google-cloud-sdk/completion.zsh.inc'
 type terraform > /dev/null 2>&1 && autoload -U +X bashcompinit && bashcompinit && complete -o nospace -C $(which terraform) terraform
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # Docker CLI completions
 fpath=(/Users/cchan/.docker/completions $fpath)
@@ -154,20 +147,14 @@ compinit
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
 
 # egcli
 if [ -f '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc' ]; then . '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc'; fi
 
-
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
-
 # Logi Build Haptics
 source ~/.config/logi-build-haptics/integration.zsh
-
-
-[ -f ~/.secrets ] && source ~/.secrets
 
 
 # Added by Antigravity CLI installer
