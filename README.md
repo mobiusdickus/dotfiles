@@ -13,6 +13,7 @@ Requires [Homebrew](https://brew.sh). Then run whichever of these you need:
 
 | Script | What it does |
 |---|---|
+| `./setup-git.sh` | Installs `stow`, stows `.gitconfig` |
 | `./setup-zsh.sh` | Installs `stow`/`lsd`, clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows the zsh configs, sets zsh as default shell |
 | `./setup-nvim.sh` | Installs `stow`/`neovim`/`tree-sitter-cli`/`ripgrep`, stows the config, syncs plugins via [lazy.nvim](https://github.com/folke/lazy.nvim) |
 
@@ -34,8 +35,25 @@ Each script only installs what's actually required for that config to run — ev
 │   ├── .bashrc
 │   ├── .bash_profile
 │   └── .profile
+├── setup-git.sh
 ├── setup-zsh.sh
 └── setup-nvim.sh
+```
+
+## Using Stow directly
+
+The scripts install prerequisites and then just run `stow`. Once a package is stowed, you edit the files straight through the symlinks — no need to re-run anything. You only need `stow` itself again if a package's file list changes (added/removed a dotfile) or a symlink got deleted:
+
+```bash
+cd ~/projects/personal/dotfiles
+stow -t ~ --restow zsh    # or: git, nvim
+```
+
+**Careful with `nvim`**: if `~/.config/nvim` doesn't already exist as a real directory, Stow "folds" the whole thing into one symlink pointing into this repo — so nvim's runtime dirs (`backups/`, `swaps/`, `undo/`) end up *inside your git repo*. `setup-nvim.sh` avoids this by pre-creating `~/.config/nvim` (and those three subdirectories) as real directories first. If you ever stow `nvim` by hand, do the same first:
+
+```bash
+mkdir -p ~/.config/nvim/{backups,swaps,undo}
+stow -t ~ --restow nvim
 ```
 
 ## Optional integrations
