@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 
 -- Providers
-vim.g.python3_host_prog = vim.env.HOME .. "/.pyenv/versions/3.13.3/bin/python"
+vim.g.python3_host_prog = vim.fn.exepath("python3")
 vim.g.loaded_perl_provider = 0
 
 -- Compat shim for Neovim 0.12 (ft_to_lang was removed)

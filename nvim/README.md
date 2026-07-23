@@ -2,23 +2,25 @@
 
 Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nvim) as the plugin manager.
 
-## Prerequisites
-
-```bash
-brew install neovim tree-sitter-cli ripgrep lsd
-brew install --cask font-hack-nerd-font
-```
-
-Set "Hack Nerd Font" in your terminal (iTerm2 → Profiles → Text → Font).
-
 ## Setup
 
 ```bash
 cd ~/projects/personal/dotfiles
-stow nvim -t ~/.config/nvim/
+./setup-nvim.sh
 ```
 
-Open `nvim` — lazy.nvim bootstraps itself and installs all plugins on first launch. Mason will auto-install language servers.
+Requires [Homebrew](https://brew.sh). This installs only what's needed for nvim to actually run — `stow`, plus `neovim`/`tree-sitter-cli`/`ripgrep` (treesitter and telescope, both core plugins, need those two) — stows the config, and syncs plugins via lazy.nvim.
+
+Open `nvim` — Mason auto-installs language servers on first launch. `pyright`/`ts_ls` need Node (`npm`), `gopls` needs `go`; missing either just breaks those specific installs (see Troubleshooting).
+
+Everything else is optional and not installed by the script — see the top-level README's integrations table:
+- **Hack Nerd Font**: without it, icons in nvim-tree/bufferline/lualine render as blank boxes. Install and set it as your terminal's font.
+- **deno**: without it, only `peek.nvim`'s markdown-preview build fails; the rest of nvim is unaffected.
+
+## Troubleshooting
+
+- **Icons render as blank boxes**: install a Nerd Font and set it as your terminal's font (e.g. iTerm2 → Settings → Profiles → Text → Font → "Hack Nerd Font Mono"). Only applies to new windows/tabs — reopen the one you're testing in.
+- **Mason fails on `pyright`/`ts_ls`/`gopls`**: install Node (`nvm`) and/or Go, then retry — `:Mason` and press `i` on the failed rows, or `:MasonInstall pyright typescript-language-server gopls` (Mason's package name differs from the `ts_ls` lspconfig name).
 
 ## Plugins
 

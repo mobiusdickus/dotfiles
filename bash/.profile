@@ -15,8 +15,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 #_______________________________________________________________________________
-# --> Poetry
-command -v poetry >/dev/null || export PATH="$HOME/.local/bin:$PATH"
+# --> uv
+command -v uv >/dev/null || export PATH="$HOME/.local/bin:$PATH"
 
 #_______________________________________________________________________________
 # --> nvm

@@ -1,7 +1,4 @@
 
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-
 # ------------------------------------------------------------------------------
 # Prezto
 # ------------------------------------------------------------------------------
@@ -58,23 +55,9 @@ get_gcp_project() {
 }
 
 update_prompt() {
-    # local GIT_BRANCH=$(get_git_branch)
-    local VIRTUALENV=$(get_virtualenv)
-    local AWS_PROF=$(get_aws_profile)
-
     PROMPT="%F{cyan}%n%f@%F{magenta}%m%f ❯ %F{245}%~%f"
-
-    # if [[ -n "$GIT_BRANCH" ]]; then
-    #     if [[ "$PWD" == *"goodlynx"* ]]; then
-    #         local GCP_PROJECT=$(get_gcp_project)
-    #         [[ -n "$GCP_PROJECT" ]] && PROMPT+=" ❯ %F{214}($GCP_PROJECT)%f"
-    #     fi
-    #     [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
-    #     PROMPT+=" ❯ %F{green}[$GIT_BRANCH]%f"
-    # fi
-
-    [[ -n "$VIRTUALENV" ]] && PROMPT+=" ❯ %F{yellow}($VIRTUALENV)%f"
-    [[ -n "$AWS_PROF" ]] && PROMPT+=" ❯ %F{208}aws:$AWS_PROF%f"
+    
+    # Add additional prompt output functions if wanted
 
     PROMPT+="
 ~$ "
@@ -88,13 +71,8 @@ alias ls="lsd"
 alias ll="lsd -la"
 alias lt="lsd --tree"
 alias nv="nvim"
-alias cloud-sql-proxy="$HOME/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
-alias kc="kiro-cli"
-alias kcr="kiro-cli chat --resume"
-alias kcl="kiro-cli login"
-alias antig="agy"
 
 # AWS profile switcher
 awsp() {
@@ -135,27 +113,14 @@ compdef _jump_mark jump unmark
 
 # ------------------------------------------------------------------------------
 # Lazy loading
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 type terraform > /dev/null 2>&1 && autoload -U +X bashcompinit && bashcompinit && complete -o nospace -C $(which terraform) terraform
 
 # Docker CLI completions
-fpath=(/Users/cchan/.docker/completions $fpath)
+[ -d "$HOME/.docker/completions" ] && fpath=("$HOME/.docker/completions" $fpath)
 autoload -Uz compinit
 compinit
 
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+# iTerm2 shell integration - enable via "Install Shell Integration" in iTerm2's Shell menu
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
-
-# egcli
-if [ -f '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc' ]; then . '/Users/cchan/Library/Group Containers/FELUD555VC.group.com.egnyte.DesktopApp/CLI/egcli.inc'; fi
-
-# Logi Build Haptics
-source ~/.config/logi-build-haptics/integration.zsh
-
-
-# Added by Antigravity CLI installer
-export PATH="/Users/chan/.local/bin:$PATH"

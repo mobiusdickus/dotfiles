@@ -9,33 +9,21 @@ git clone https://github.com/mobiusdickus/dotfiles.git ~/projects/personal/dotfi
 cd ~/projects/personal/dotfiles
 ```
 
-```bash
-brew install stow neovim tree-sitter-cli ripgrep lsd
-brew install --cask font-hack-nerd-font
-```
+Requires [Homebrew](https://brew.sh). Then run whichever of these you need:
 
-### Zsh + Zprezto
+| Script | What it does |
+|---|---|
+| `./setup-zsh.sh` | Installs `stow`/`lsd`, clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows the zsh configs, sets zsh as default shell |
+| `./setup-nvim.sh` | Installs `stow`/`neovim`/`tree-sitter-cli`/`ripgrep`, stows the config, syncs plugins via [lazy.nvim](https://github.com/folke/lazy.nvim) |
 
-```bash
-./setup-zsh.sh
-```
-
-Clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows zsh configs, and sets zsh as default shell.
-
-### Neovim
-
-```bash
-./setup-nvim.sh
-```
-
-Stows `init.lua` into `~/.config/nvim/` and syncs [lazy.nvim](https://github.com/folke/lazy.nvim) plugins.
+Each script only installs what's actually required for that config to run — everything else (icons, markdown preview, etc.) is optional; see below.
 
 ## Structure
 
 ```
 ├── zsh/
 │   ├── .zshrc            # Zsh config (prezto + custom prompt/aliases)
-│   ├── .zshenv           # Env vars for non-interactive shells
+│   ├── .zshenv           # Env vars for non-interactive shells; sources ~/.secrets and ~/.work
 │   ├── .zprofile         # Login shell setup (PATH, tools)
 │   └── .zpreztorc        # Prezto module config
 ├── nvim/.config/nvim/
@@ -46,13 +34,39 @@ Stows `init.lua` into `~/.config/nvim/` and syncs [lazy.nvim](https://github.com
 │   ├── .bashrc
 │   ├── .bash_profile
 │   └── .profile
-├── keybindings/
-│   └── .inputrc
 ├── setup-zsh.sh
 └── setup-nvim.sh
 ```
 
+## Optional integrations
+
+Everything below is guarded and does nothing if the tool isn't installed — none of it is required. Install only what you use:
+
+| Tool | Enables |
+|---|---|
+| Hack Nerd Font (`brew install --cask font-hack-nerd-font`) | Icons in `lsd` and nvim (nvim-tree, bufferline, lualine) — set as your terminal's font after installing |
+| [deno](https://deno.com) (`brew install deno`) | `peek.nvim`'s markdown preview build step |
+| [pyenv](https://github.com/pyenv/pyenv) | Python interpreter versions |
+| [uv](https://github.com/astral-sh/uv) | Python packages/projects, virtualenvs |
+| [nvm](https://github.com/nvm-sh/nvm) | Node versions |
+| [pnpm](https://pnpm.io) (`brew install pnpm`) | Node packages |
+| Go | `$GOPATH`/`$GOROOT`; also needed for Neovim's Mason to build `gopls` |
+| PostgreSQL 15 client | `psql` on `PATH` |
+| [OrbStack](https://orbstack.dev) / Docker Desktop | Container CLI + completions |
+| [direnv](https://direnv.net) | Per-directory env vars |
+| [fzf](https://github.com/junegunn/fzf) | Fuzzy history/file search |
+| [Terraform](https://www.terraform.io) | `tf` alias + autocomplete |
+| [minikube](https://minikube.sigs.k8s.io) | `mk` alias |
+| AWS CLI | `awsp` profile-switcher |
+| iTerm2 | Shell integration — run "Install Shell Integration" from its Shell menu |
+
 ## Notes
 
-- Secrets (API keys, tokens) live in `~/.secrets` (sourced from `.zshrc`, not tracked).
-- Work credentials live in `~/.work` (sourced from `.zshenv`, not tracked).
+- Secrets (`~/.secrets`) and work credentials (`~/.work`) are sourced from `.zshenv`, not tracked by git.
+
+## Troubleshooting
+
+- **Stow conflicts** (`~/.zshrc`/`.zprofile`/`.zshenv` already exist as real files): back them up first — `mv ~/.zprofile ~/.zprofile.pre-dotfiles.bak` — then fold anything worth keeping into the repo's version before restowing.
+- **Icons still missing after setting the font**: the change only applies to new windows/tabs. Close and reopen the one you're testing in.
+- **`nvm` installed via Homebrew but not loading**: `.zprofile` expects Homebrew's path (`$HOMEBREW_PREFIX/opt/nvm`); run `mkdir ~/.nvm` once after installing.
+- **Neovim's Mason fails to install `pyright`/`ts_ls`/`gopls`**: they need `npm` (Node) and `go` on `PATH` respectively. Install the runtime, then retry via `:Mason` or `:MasonInstall pyright typescript-language-server gopls`.
