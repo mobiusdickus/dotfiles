@@ -72,9 +72,11 @@ require("lazy").setup({
   -- Treesitter (replaces vim-polyglot)
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = function()
     vim.treesitter.language.register("bash", "sh")
-    local ensure = { "lua", "python", "javascript", "typescript", "tsx", "go", "html", "css", "json", "yaml", "bash", "markdown" }
-    for _, lang in ipairs(ensure) do
-      pcall(function() vim.treesitter.start(0, lang) end)
+    local ensure = { "lua", "python", "javascript", "typescript", "tsx", "go", "html", "css", "json", "yaml", "bash", "markdown", "markdown_inline" }
+    local installed = require("nvim-treesitter.config").get_installed()
+    local missing = vim.tbl_filter(function(lang) return not vim.tbl_contains(installed, lang) end, ensure)
+    if #missing > 0 then
+      require("nvim-treesitter.install").install(missing, { summary = true })
     end
     vim.api.nvim_create_autocmd("FileType", {
       callback = function() pcall(vim.treesitter.start) end,
@@ -92,6 +94,20 @@ require("lazy").setup({
   -- Git
   "tpope/vim-fugitive",
   { "lewis6991/gitsigns.nvim", config = function() require("gitsigns").setup() end },
+
+  -- Markdown rendering
+  { "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    config = function() require("render-markdown").setup() end },
+
+  -- Markdown browser preview
+  { "toppair/peek.nvim", build = "deno task --quiet build:fast", ft = { "markdown" },
+    keys = {
+      { "<leader>mp", function() require("peek").open() end, desc = "Markdown preview" },
+      { "<leader>mc", function() require("peek").close() end, desc = "Close preview" },
+    },
+    config = function() require("peek").setup() end },
 
   -- Editing
   { "kylechui/nvim-surround", event = "VeryLazy", config = function() require("nvim-surround").setup() end },
