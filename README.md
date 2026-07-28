@@ -16,6 +16,7 @@ Requires [Homebrew](https://brew.sh). Then run whichever of these you need:
 | `./setup-git.sh` | Installs `stow`, stows `.gitconfig` |
 | `./setup-zsh.sh` | Installs `stow`/`lsd`, clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows the zsh configs, sets zsh as default shell |
 | `./setup-nvim.sh` | Installs `stow`/`neovim`/`tree-sitter-cli`/`ripgrep`, stows the config, syncs plugins via [lazy.nvim](https://github.com/folke/lazy.nvim) |
+| `./setup-claude.sh` | Installs `stow`/`jq`, stows the Claude Code config/skills, installs the gopls/pyright/typescript LSP plugins, registers the context7/obsidian MCP servers |
 
 Each script only installs what's actually required for that config to run — everything else (icons, markdown preview, etc.) is optional; see below.
 
@@ -35,9 +36,15 @@ Each script only installs what's actually required for that config to run — ev
 │   ├── .bashrc
 │   ├── .bash_profile
 │   └── .profile
+├── claude/.claude/
+│   ├── settings.json       # Permissions, statusline, enabled plugins
+│   ├── CLAUDE.md           # Global instructions
+│   ├── statusline-command.sh
+│   └── skills/             # git-standard, go, python, typescript
 ├── setup-git.sh
 ├── setup-zsh.sh
-└── setup-nvim.sh
+├── setup-nvim.sh
+└── setup-claude.sh
 ```
 
 ## Using Stow directly
@@ -81,6 +88,8 @@ Everything below is guarded and does nothing if the tool isn't installed — non
 ## Notes
 
 - Secrets (`~/.secrets`) and work credentials (`~/.work`) are sourced from `.zshenv`, not tracked by git.
+- `~/.claude.json` (MCP server registrations plus account/session state) is not tracked by git — `setup-claude.sh` registers the `context7`/`obsidian` MCP servers via `claude mcp add-json` instead, so the account/cache noise in that file never ends up in the repo.
+- The `obsidian` MCP server proxies to the Obsidian desktop app's Local REST API plugin — it only works while Obsidian is open with that plugin enabled and `OBSIDIAN_API_TOKEN` set in `~/.secrets`. `setup-claude.sh` prints a reminder for this since it can't be automated.
 
 ## Troubleshooting
 

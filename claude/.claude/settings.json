@@ -1,0 +1,43 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "bash $HOME/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "theme": "dark",
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__obsidian__vault_list",
+      "mcp__obsidian__vault_read",
+      "mcp__obsidian__vault_get_document_map",
+      "mcp__obsidian__active_file_get_path",
+      "mcp__obsidian__search_query",
+      "mcp__obsidian__search_simple",
+      "mcp__obsidian__tag_list",
+      "mcp__obsidian__command_list",
+      "Read",
+      "Glob"
+    ],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.secrets)",
+      "Read(~/.work)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.kube/config)",
+      "Read(//**/*.pem)",
+      "Read(//**/*.key)",
+      "Read(//**/id_rsa*)",
+      "Read(//**/id_ed25519*)"
+    ]
+  }
+}
