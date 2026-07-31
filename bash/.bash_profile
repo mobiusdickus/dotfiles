@@ -20,4 +20,4 @@ complete -C /opt/homebrew/bin/terraform terraform
 
 
 # Added by Antigravity CLI installer
-export PATH="/Users/chan/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

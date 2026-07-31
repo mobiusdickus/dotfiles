@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
   name = Colin Chan
-  email = colin.th.chan@gmail.com
+  email = 10773226+mobiusdickus@users.noreply.github.com
 [alias]
 	b = branch
 	s = status
@@ -10,4 +10,4 @@
 [merge]
 	tool = opendiff
 [http]
-	cookiefile = /Users/chan/.gitcookies
+	cookiefile = ~/.gitcookies

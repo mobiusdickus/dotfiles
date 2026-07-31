@@ -38,7 +38,7 @@ export PATH="$PATH:/Library/PostgreSQL/15/bin"
 # --> Aliases
 alias ll="ls -la"
 alias nv="nvim"
-alias cloud-sql-proxy="/Users/chan/google-cloud-sdk/cloud-sql-proxy"
+alias cloud-sql-proxy="$HOME/google-cloud-sdk/cloud-sql-proxy"
 alias tf="terraform"
 alias mk="minikube"
 
@@ -53,4 +53,4 @@ export OPENSSL_DIR="/usr/bin/openssl"
 
 
 # Added by Antigravity CLI installer
-export PATH="/Users/chan/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
