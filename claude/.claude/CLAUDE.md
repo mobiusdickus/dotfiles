@@ -12,3 +12,7 @@ Vault: `mobius`. Keep triggers narrow — don't spam searches or notes for trivi
 - **Auto-capture** only on explicit cues ("note this," "remember this") — never for routine in-session choices. Match existing vault conventions.
 
 **Memory vs. Obsidian**: memory = how to work with you / project state, session-to-session. Obsidian = your durable personal notes, meant for you to read. Explicit note/remember request: personal note-to-self → Obsidian; about working with you/the project → memory; genuinely both → both, but don't duplicate by default.
+
+## Git
+
+Before any `git commit`, check for and load the `git-standard` skill rather than defaulting to built-in commit conventions.

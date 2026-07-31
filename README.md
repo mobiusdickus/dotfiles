@@ -17,6 +17,7 @@ Requires [Homebrew](https://brew.sh). Then run whichever of these you need:
 | `./setup-zsh.sh` | Installs `stow`/`lsd`, clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows the zsh configs, sets zsh as default shell |
 | `./setup-nvim.sh` | Installs `stow`/`neovim`/`tree-sitter-cli`/`ripgrep`, stows the config, syncs plugins via [lazy.nvim](https://github.com/folke/lazy.nvim) |
 | `./setup-claude.sh` | Installs `stow`/`jq`, stows the Claude Code config/skills, installs the gopls/pyright/typescript LSP plugins, registers the context7/obsidian MCP servers |
+| `./setup-codex.sh` | Installs `stow`, stows the Codex CLI global `AGENTS.md`, registers the context7/obsidian MCP servers |
 
 Each script only installs what's actually required for that config to run — everything else (icons, markdown preview, etc.) is optional; see below.
 
@@ -41,10 +42,13 @@ Each script only installs what's actually required for that config to run — ev
 │   ├── CLAUDE.md           # Global instructions
 │   ├── statusline-command.sh
 │   └── skills/             # git-standard, go, python, typescript
+├── codex/.codex/
+│   └── AGENTS.md           # Global instructions
 ├── setup-git.sh
 ├── setup-zsh.sh
 ├── setup-nvim.sh
-└── setup-claude.sh
+├── setup-claude.sh
+└── setup-codex.sh
 ```
 
 ## Using Stow directly
@@ -89,7 +93,8 @@ Everything below is guarded and does nothing if the tool isn't installed — non
 
 - Secrets (`~/.secrets`) and work credentials (`~/.work`) are sourced from `.zshenv`, not tracked by git.
 - `~/.claude.json` (MCP server registrations plus account/session state) is not tracked by git — `setup-claude.sh` registers the `context7`/`obsidian` MCP servers via `claude mcp add-json` instead, so the account/cache noise in that file never ends up in the repo.
-- The `obsidian` MCP server proxies to the Obsidian desktop app's Local REST API plugin — it only works while Obsidian is open with that plugin enabled and `OBSIDIAN_API_TOKEN` set in `~/.secrets`. `setup-claude.sh` prints a reminder for this since it can't be automated.
+- Likewise, `~/.codex/config.toml` is not tracked — it mixes portable prefs (model, plugins) with app-managed and machine-local state (marketplaces, desktop-app MCP entries, per-project trust levels that grow over time). `setup-codex.sh` registers the `context7`/`obsidian` MCP servers via `codex mcp add` instead, same reasoning as Claude.
+- The `obsidian` MCP server proxies to the Obsidian desktop app's Local REST API plugin — it only works while Obsidian is open with that plugin enabled and `OBSIDIAN_API_TOKEN` set in `~/.secrets`. `setup-claude.sh`/`setup-codex.sh` both print a reminder for this since it can't be automated.
 
 ## Troubleshooting
 

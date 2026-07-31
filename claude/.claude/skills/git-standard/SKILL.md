@@ -10,3 +10,4 @@ description: Git commit message conventions. Use when making commits or reviewin
 - Lowercase type, lowercase description, no period at end.
 - Use `!` for breaking changes: `feat!: description`.
 - Optional body/footer separated by blank line — use sparingly.
+- Never add a `Co-Authored-By: Claude` (or similar AI attribution) trailer.

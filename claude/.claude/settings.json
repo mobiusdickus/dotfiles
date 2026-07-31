@@ -22,7 +22,10 @@
       "mcp__obsidian__tag_list",
       "mcp__obsidian__command_list",
       "Read",
-      "Glob"
+      "Glob",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [
       "Read(~/.ssh/**)",
