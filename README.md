@@ -16,8 +16,8 @@ Requires [Homebrew](https://brew.sh). Then run whichever of these you need:
 | `./setup-git.sh` | Installs `stow`, stows `.gitconfig` |
 | `./setup-zsh.sh` | Installs `stow`/`lsd`, clones [Zprezto](https://github.com/sorin-ionescu/prezto), stows the zsh configs, sets zsh as default shell |
 | `./setup-nvim.sh` | Installs `stow`/`neovim`/`tree-sitter-cli`/`ripgrep`, stows the config, syncs plugins via [lazy.nvim](https://github.com/folke/lazy.nvim) |
-| `./setup-claude.sh` | Installs `stow`/`jq`, stows the Claude Code config/skills, installs the gopls/pyright/typescript LSP plugins, registers the context7/obsidian MCP servers |
-| `./setup-codex.sh` | Installs `stow`, stows the Codex CLI global `AGENTS.md`, registers the context7/obsidian MCP servers |
+| `./setup-claude.sh` | Installs `stow`/`jq`, stows the Claude Code config and shared skills, installs the gopls/pyright/typescript LSP plugins, registers the context7/obsidian MCP servers |
+| `./setup-codex.sh` | Installs `stow`, stows the Codex CLI global `AGENTS.md` and shared skills, registers the context7/obsidian MCP servers |
 
 Each script only installs what's actually required for that config to run — everything else (icons, markdown preview, etc.) is optional; see below.
 
@@ -40,10 +40,14 @@ Each script only installs what's actually required for that config to run — ev
 ├── claude/.claude/
 │   ├── settings.json       # Permissions, statusline, enabled plugins
 │   ├── CLAUDE.md           # Global instructions
-│   ├── statusline-command.sh
-│   └── skills/             # git-standard, go, python, typescript
+│   └── statusline-command.sh
 ├── codex/.codex/
 │   └── AGENTS.md           # Global instructions
+├── skills/                      # Shared by Claude and Codex
+│   ├── git-standard/SKILL.md
+│   ├── go/SKILL.md
+│   ├── python/SKILL.md
+│   └── typescript/SKILL.md
 ├── setup-git.sh
 ├── setup-zsh.sh
 ├── setup-nvim.sh
@@ -59,6 +63,16 @@ The scripts install prerequisites and then just run `stow`. Once a package is st
 cd ~/projects/personal/dotfiles
 stow -t ~ --restow zsh    # or: git, nvim
 ```
+
+The `skills` package has two targets rather than the home directory. Both setup scripts expose the same canonical skill files through each agent's native discovery path:
+
+```bash
+mkdir -p ~/.claude/skills ~/.agents/skills
+stow -d ~/projects/personal/dotfiles -t ~/.claude/skills --restow skills
+stow -d ~/projects/personal/dotfiles -t ~/.agents/skills --restow skills
+```
+
+Claude and Codex discover these skills automatically and load one when its `description` matches the current task. Invoke a skill explicitly when needed (`$git-standard` in Codex, for example). Edits to an existing `SKILL.md` are available through the symlinks immediately; restart the agent after adding or removing a skill if its skill list appears stale.
 
 **Careful with `nvim`**: if `~/.config/nvim` doesn't already exist as a real directory, Stow "folds" the whole thing into one symlink pointing into this repo — so nvim's runtime dirs (`backups/`, `swaps/`, `undo/`) end up *inside your git repo*. `setup-nvim.sh` avoids this by pre-creating `~/.config/nvim` (and those three subdirectories) as real directories first. If you ever stow `nvim` by hand, do the same first:
 

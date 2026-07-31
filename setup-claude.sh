@@ -24,7 +24,7 @@ fi
 # ------------------------------------------------------------------------------
 # Existing real files (not yet Stow symlinks) will conflict with stow - move them
 # aside so the repo's copies win, same pattern as the zsh/nvim troubleshooting notes.
-for f in settings.json CLAUDE.md statusline-command.sh skills; do
+for f in settings.json CLAUDE.md statusline-command.sh; do
   target="$HOME/.claude/$f"
   if [ -e "$target" ] && [ ! -L "$target" ]; then
     mv "$target" "$target.pre-dotfiles.bak"
@@ -34,6 +34,18 @@ done
 
 stow -d "$DOTFILES" -t "$HOME" --restow claude
 ok "Stowed Claude config"
+
+# Skills are shared with Codex from one canonical package. Older versions of
+# this setup stowed ~/.claude/skills as a single symlink, so preserve that link
+# before replacing it with a real directory containing per-skill links.
+skills_target="$HOME/.claude/skills"
+if [ -L "$skills_target" ]; then
+  mv "$skills_target" "$skills_target.pre-shared-skills.bak"
+  warn "Backed up existing ~/.claude/skills symlink to skills.pre-shared-skills.bak"
+fi
+mkdir -p "$skills_target"
+stow -d "$DOTFILES" -t "$skills_target" --restow skills
+ok "Stowed shared skills for Claude"
 
 # ------------------------------------------------------------------------------
 # LSP plugins

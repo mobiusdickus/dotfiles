@@ -31,6 +31,17 @@ fi
 stow -d "$DOTFILES" -t "$HOME" --restow codex
 ok "Stowed Codex config"
 
+# Use the same canonical skills as Claude while exposing them through Codex's
+# global user-skill discovery directory.
+skills_target="$HOME/.agents/skills"
+if [ -L "$skills_target" ]; then
+  mv "$skills_target" "$skills_target.pre-dotfiles.bak"
+  warn "Backed up existing ~/.agents/skills symlink to skills.pre-dotfiles.bak"
+fi
+mkdir -p "$skills_target"
+stow -d "$DOTFILES" -t "$skills_target" --restow skills
+ok "Stowed shared skills for Codex"
+
 # ------------------------------------------------------------------------------
 # MCP servers
 # config.toml itself isn't tracked/stowed — it mixes portable prefs with
